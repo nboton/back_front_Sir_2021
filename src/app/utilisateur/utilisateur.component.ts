@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilisateurService } from '../utilisateur.service';
-import { User } from './Domaine/user';
+
 
 @Component({
   selector: 'app-utilisateur',
@@ -10,14 +10,14 @@ import { User } from './Domaine/user';
 
 
 export class UtilisateurComponent implements OnInit {
-  displayedColumns = ['codeUser', 'nom', 'prenom', 'email'];
+  displayedColumns = ['codeUser', 'nom', 'prenom', 'email','action'];
   dataSource:any;
 
   constructor(private utilisateurService:UtilisateurService) { }
 
   ngOnInit(): void {
     //this.dataSource=this.utilisateurService.ELEMENT_DATA;
-      this.utilisateurService.getUsers().subscribe(data =>
+      this.utilisateurService.getAllUsers().subscribe(data =>
         {
           console.log("Voici la liste des utilisateur:",data)
          
@@ -25,6 +25,11 @@ export class UtilisateurComponent implements OnInit {
           console.log("Voici la data source:",this.dataSource)
 
         })
+  }
+
+  addUser(){
+    
+    
   }
 
 }

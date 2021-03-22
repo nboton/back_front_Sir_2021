@@ -1,22 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from './utilisateur/Domaine/user';
+import { Observable, Subject } from 'rxjs';
+import { IUser} from './modele/IUser';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilisateurService {
 
+utilisateurSubject=new Subject<IUser>();
+
 
   constructor(private httpclient:HttpClient) { }
 
 
-  getUsers():Observable<User>{
-    return this.httpclient.get<User>("/api/utilisateur/");
+  getAllUsers():Observable<IUser>{
+    return this.httpclient.get<IUser>("/api/utilisateur/");
   }
 
-  /*setUser(id:string):Observable<PokeDetail>{
-    return this.httpclient.get<PokeDetail>(url+id+"/");
-  }*/
+ 
 }
