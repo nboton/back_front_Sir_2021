@@ -1,0 +1,15 @@
+<p>section works!</p>
+
+<div class="">
+    <form [formGroup]="sectionForm" (ngSubmit)="onSubmitForm()">
+     
+      <div class="form-group">
+        <label for="libelle">libelle</label>
+        <input type="text" id="libelle" class="form-control" formControlName="libelle">
+      </div>
+             <button type="submit" class="btn btn-primary" [disabled]="sectionForm.invalid">Enregistrer la section</button>
+             <br><br>
+             <button class="btn btn-primary" (click)="BackOnList()">Retour vers la liste des sections</button>
+
+    </form>
+  </div>

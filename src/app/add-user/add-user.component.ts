@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { IFiche } from '../modele/IFiche';
+import { IUser } from '../modele/IUser';
 import { User } from '../modele/User';
 import { UtilisateurService } from '../utilisateur.service';
+
 
 
 @Component({
@@ -11,14 +16,26 @@ import { UtilisateurService } from '../utilisateur.service';
 })
 export class AddUserComponent implements OnInit {
   title = 'Ajout d\'un utilisateur';
-  userForm: any ;
-  constructor(private fb: FormBuilder,private userService:UtilisateurService) {
-   this.initForm();
+  usersForm:FormGroup;
+  fiche:IFiche | undefined;
+  ficheSubject=new Subject<IFiche>();
+  idFiche:string="";
+
+  constructor(private fb: FormBuilder,
+              private userService:UtilisateurService,
+              private router:Router,
+              private route:ActivatedRoute) {
+  
  }
+ ngOnInit(): void {
+  
+   this.initForm();
+   
+}
 
 
   initForm() {
-   this.userForm = this.fb.group({
+   this.usersForm = this.fb.group({
       codeUser: ['', Validators.required ],
       nom: ['', Validators.required ],
       prenom: ['', Validators.required ],
@@ -26,16 +43,31 @@ export class AddUserComponent implements OnInit {
 
    });
  }
-  ngOnInit(): void {
-  }
+ 
+ 
 
   onSubmitForm(){
-    const code=this.userForm.get("userCode").value;
-    const nom=this.userForm.get("nom").value;
-    const prenom=this.userForm.get("prenom").value;
-    const email=this.userForm.get("email").value;
-    const user=new User(code,nom,prenom,email);
-    this.userService.addUser(user)
+    const code=this.usersForm.get("codeUser").value;
+    const nom=this.usersForm.get("nom").value;
+    const prenom=this.usersForm.get("prenom").value;
+    const email=this.usersForm.get("email").value;
+    const user=new User(code,nom,prenom,email,[]);
+    //console.log('code:',code," nom:",nom," prenom",prenom, " email",email);
+    this.userService.addUser(user).then(
+      (res)=>{
+        if (res){
+          this.userService.emitUser();
+        }
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+    console.log("l'objet user issu du form:",user)
+  }
+  BackOnList() {
+    this.router.navigate(['detail-user']);
+  
   }
 
 }

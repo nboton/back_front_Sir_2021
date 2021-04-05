@@ -1,9 +1,18 @@
 import { IFiche } from "./IFiche";
 
 export class User {
+  codeUser: string;
+  nom:      string;
+  prenom:   string;
+  email:    string;
+  fiches:   IFiche[];
    
-    constructor( private codeUser: string,private nom:string,private prenom:string, 
-        private email:string ){
+    constructor( codeUser: string,nom:string,prenom:string, email:string, fiches: IFiche[] ){
+        this.codeUser=codeUser;
+        this.nom=nom;
+        this.prenom=prenom;
+        this.email=email;
+        this.fiches=fiches;
 
     }
   }
