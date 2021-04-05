@@ -51,7 +51,8 @@ export class UtilisateurComponent implements OnInit {
             console.log(error);
           }
             );
-      this.router.navigate(['detail-user']);
+          this.users=this.users.filter(val=>user.codeUser!=val.codeUser);
+            //this.router.navigate(['detail-section']);
     }
   //}
 
