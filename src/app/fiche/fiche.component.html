@@ -1,1 +1,47 @@
-<p>fiche works!</p>
+
+<div>
+    <form [formGroup]="ficheForm" (ngSubmit)="onSubmitForm()">
+     
+        <div class="form-group">
+          <label for="dateButoire">Date butoire</label>
+          <input type="text" id="dateButoire" class="form-control" formControlName="dateButoire">
+        </div>
+
+        <div class="form-group">
+            <label for="delai">Délai</label>
+            <input type="text" id="delai" class="form-control" formControlName="delai">
+          </div>
+
+          <div class="form-group">
+            <label for="libelle">libelle</label>
+            <input type="text" id="libelle" class="form-control" formControlName="libelle">
+          </div>
+
+          <div class="form-group">
+            <label for="lieu">Lieu</label>
+            <input type="text" id="lieu" class="form-control" formControlName="lieu">
+          </div>
+
+          <div class="form-group">
+            <label for="noteExplicative">Note Explicative</label>
+            <input type="text" id="noteExplicative" class="form-control" formControlName="noteExplicative">
+          </div>
+
+          <div class="form-group">
+            <label for="url">Url</label>
+            <input type="text" id="url" class="form-control" formControlName="url">
+          </div>
+          <div class="form-group">
+            <label for="codeUser">Code Utilisateur</label>
+            <input type="text" id="codeUser" class="form-control" formControlName="codeUser">
+          </div>
+               <button type="submit" class="btn btn-primary" [disabled]="ficheForm.invalid">Enregistrer la Fiche</button>
+               <br><br>
+               <button class="btn btn-primary" (click)="BackOnList()">Retour vers la liste des Fiche</button>
+  
+      </form>
+
+
+</div>
+
+

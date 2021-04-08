@@ -52,7 +52,7 @@ export class UtilisateurComponent implements OnInit {
           }
             );
           this.users=this.users.filter(val=>user.codeUser!=val.codeUser);
-            //this.router.navigate(['detail-section']);
+         
     }
   //}
 

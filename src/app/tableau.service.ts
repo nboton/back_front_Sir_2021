@@ -43,7 +43,6 @@ export class TableauService {
   }*/
   addTableau(tableau:Tableau): Observable<ITableau> {
     return this.httpclient.post<ITableau>("/api/taleau/add",tableau);
+  }
 }
-}
-
 

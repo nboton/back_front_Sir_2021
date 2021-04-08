@@ -25,26 +25,26 @@ export class AddUserComponent implements OnInit {
               private userService:UtilisateurService,
               private router:Router,
               private route:ActivatedRoute) {
-  
- }
- ngOnInit(): void {
-  
-   this.initForm();
-   
-}
+
+  }
+  ngOnInit(): void {
+
+    this.initForm();
+
+  }
 
 
   initForm() {
-   this.usersForm = this.fb.group({
+    this.usersForm = this.fb.group({
       codeUser: ['', Validators.required ],
       nom: ['', Validators.required ],
       prenom: ['', Validators.required ],
       email: ['', Validators.required ],
 
-   });
- }
- 
- 
+    });
+  }
+
+
 
   onSubmitForm(){
     const code=this.usersForm.get("codeUser").value;
@@ -67,7 +67,7 @@ export class AddUserComponent implements OnInit {
   }
   BackOnList() {
     this.router.navigate(['detail-user']);
-  
+
   }
 
 }

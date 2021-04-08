@@ -13,10 +13,10 @@ export class SectionService {
   sectionSubject=new Subject<ISection>();
   urldomaine:string="/api/section/";
   constructor(private httpclient:HttpClient) { }
-/**
- * Permet d'emettre d'émettre la liste afin de pouvoir rafraichir celle-ci dans le component list-section
- */
- 
+  /**
+   * Permet d'emettre d'émettre la liste afin de pouvoir rafraichir celle-ci dans le component list-section
+   */
+
   emitSection(){
     this.getAllSection().subscribe(
       (sects)=>{
@@ -25,26 +25,26 @@ export class SectionService {
       }
     )
   }
-/**
- * 
- * @returns La liste des sections
- */
+  /**
+   *
+   * @returns La liste des sections
+   */
   getAllSection():Observable<ISection>{
     return this.httpclient.get<ISection>(this.urldomaine);
   }
-/**
- * Permet de récupérer les infos d'une section données
- * @param idSection 
- * @returns 
- */
+  /**
+   * Permet de récupérer les infos d'une section données
+   * @param idSection
+   * @returns
+   */
   getSection(idSection:number):Observable<ISection>{
     return this.httpclient.get<ISection>(this.urldomaine+idSection);
   }
 
   /**
    * Permet l'ajout d'une nouvelle section
-   * @param section 
-   * @returns 
+   * @param section
+   * @returns
    */
 
   addSection(section:any):Promise<any>{
@@ -52,16 +52,15 @@ export class SectionService {
     return this.httpclient.post<Section>(this.urldomaine+"add",section).toPromise();
   }
 
-/**
- * Permet de supprimer une section
- * @param section 
- * @returns 
- */
+  /**
+   * Permet de supprimer une section
+   * @param section
+   * @returns
+   */
   deleteSection(section:ISection):Observable<Section>{
     return this.httpclient.delete<Section>(this.urldomaine+"delete/"+section.idSection);
   }
-  
-  
-}
 
+
+}
 

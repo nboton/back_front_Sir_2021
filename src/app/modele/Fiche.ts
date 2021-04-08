@@ -1,9 +1,10 @@
 import { ITableau } from "./ITableau";
 import { IUser } from "./IUser";
+import { Tableau } from "./Tableau";
 
 export class Fiche {
    
-    constructor( idFiche:     number,
+    constructor( 
         dateButoire:          number,
         libelle:              string,
         lieu:                 string,
@@ -13,7 +14,7 @@ export class Fiche {
         tags:                 any[],
         utilisateur:          IUser,
         positionnementFiches: any[],
-        tableau:              ITableau){
+        tableau:              Tableau){
 
     }
   }

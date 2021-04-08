@@ -35,13 +35,8 @@ export class FicheService {
   }
 
 
-  /*addUse(user):Promise<any>{
-    return this.httpclient.post<IUser>("/api/utilisateur/add",user).toPromise();
+  addFiche(fiche:Fiche): Promise<any> {
+    console.log('Nouvelle Fiche à renregistrer',fiche);
+    return this.httpclient.post<Fiche>("/fiche/add", fiche).toPromise();
   }
-  /*setUser(id:string):Observable<PokeDetail>{
-    return this.httpclient.get<PokeDetail>(url+id+"/");
-  }*/
-  addFiche(fiche:Fiche): Observable<IFiche> {
-    return this.httpclient.post<IFiche>("/api/fiche/add", fiche);
-}
 }

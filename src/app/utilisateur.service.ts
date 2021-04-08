@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { ISection } from './modele/ISection';
 import { IUser} from './modele/IUser';
 import { User } from './modele/User';
 
@@ -30,13 +31,19 @@ export class UtilisateurService {
     return this.httpclient.get<IUser>("/api/utilisateur/"+code);
   }
 
-  deleteUser(code:string):Observable<IUser>{
-    console.log("url de supression:/api/utilisateur/delete/"+code);
-    return this.httpclient.delete<IUser>("/api/utilisateur/delete/"+code);
+  deleteUser(user:IUser):Observable<User>{
+    console.log("url de supression:/api/utilisateur/delete/"+user.codeUser);
+    return this.httpclient.delete<User>("/api/utilisateur/delete/"+user.codeUser);
   }
+
 
   addUser(user:User): Promise<IUser> {
     console.log("l'objet adduser issu du form:",user)
     return this.httpclient.post<IUser>("/api/utilisateur/add", user).toPromise();
+  }
+
+  updateUser(user:User): Promise<IUser> {
+    console.log("l'objet adduser issu du form:",user)
+    return this.httpclient.put<IUser>("/api/utilisateur/add", user).toPromise();
   }
 }
