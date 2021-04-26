@@ -1,0 +1,22 @@
+<div style="margin-left: 5%; margin-right: 5%;align-content: center;"><p>add-edit-fiche-dialog works!</p>
+
+<h1 mat-dialog-title *ngIf="data">Ajout d'une nouvelle fiche</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>Favorite Animal</mat-label>
+    <input  placeholder="pat@example.com"[formControl]="libelle" required matInput [(ngModel)]="data.libelle">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="pat@example.com"  required>
+   <!--<mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+  </mat-form-field>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
+</div>

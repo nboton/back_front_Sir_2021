@@ -12,6 +12,7 @@ import { User } from './modele/User';
 export class UtilisateurService {
   utilisateurs:IUser;
   utilisateurSubject=new Subject<IUser>();
+  oneUserSubject=new Subject<IUser>();
   constructor(private httpclient:HttpClient) { }
 
   emitUser(){
@@ -27,13 +28,13 @@ export class UtilisateurService {
     return this.httpclient.get<IUser>("/api/utilisateur/");
   }
 
-  getUser(code:string):Observable<IUser>{
-    return this.httpclient.get<IUser>("/api/utilisateur/"+code);
+  getUser(code:string):Observable<User>{
+    return this.httpclient.get<User>("/api/utilisateur/"+code);
   }
 
-  deleteUser(user:IUser):Observable<User>{
-    console.log("url de supression:/api/utilisateur/delete/"+user.codeUser);
-    return this.httpclient.delete<User>("/api/utilisateur/delete/"+user.codeUser);
+  deleteUser(user:IUser):Observable<IUser>{
+      console.log("url de supression:/api/utilisateur/delete/"+user.codeUser);
+    return this.httpclient.delete<IUser>("/api/utilisateur/delete/"+user.codeUser);
   }
 
 

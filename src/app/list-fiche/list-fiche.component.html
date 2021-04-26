@@ -20,21 +20,21 @@
         <th scope="col">Url</th>
         <th scope="col">Code user</th>
         <th scope="col" style="width: auto;" class="text-center">Action</th>
-       
+      
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let fiche of fiches">
         <th scope="row">{{fiche.idFiche}}</th>
-        <td>{{fiche.dateButoire}}</td>
+        <td>{{fiche.dateButoire | date:'MM/dd/yyyy'}}</td>
         <td>{{fiche.delai}}</td>
         <td>{{fiche.libelle}}</td>
         <td>{{fiche.lieu}}</td>
         <td>{{fiche.noteExplicative}}</td>
         <td>{{fiche.url}}</td>
-        <td>{{fiche.codeUser}}</td>
+        <td>{{fiche.utilisateur.codeUser}}</td>
         <td class="text-center">
-          <button title="modifier" (click)="onRemove(fiche)"
+          <button title="modifier" (click)="importFile(fiche)"
                     class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>Edit
           </button>
 

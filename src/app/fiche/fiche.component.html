@@ -1,7 +1,13 @@
 
 <div>
+  <div>
+    <button mat-raised-button color="white" (click)="importFile(add)" >Nouvelle Fiche</button> <br> <br>
+  </div>
     <form [formGroup]="ficheForm" (ngSubmit)="onSubmitForm()">
-     
+
+       
+
+
         <div class="form-group">
           <label for="dateButoire">Date butoire</label>
           <input type="text" id="dateButoire" class="form-control" formControlName="dateButoire">
@@ -31,10 +37,18 @@
             <label for="url">Url</label>
             <input type="text" id="url" class="form-control" formControlName="url">
           </div>
-          <div class="form-group">
+          <!--<div class="form-group">
             <label for="codeUser">Code Utilisateur</label>
             <input type="text" id="codeUser" class="form-control" formControlName="codeUser">
-          </div>
+          </div> -->
+            <div class="form-group">
+              <select formControlName="selectedUserId" >
+                <option disabled>Choisir l'utilisaeur</option>
+                <option [value]="user.codeUser" *ngFor="let user of users " >
+                  {{user.nom}} {{user.prenom}}
+                </option>
+              </select>
+            </div>
                <button type="submit" class="btn btn-primary" [disabled]="ficheForm.invalid">Enregistrer la Fiche</button>
                <br><br>
                <button class="btn btn-primary" (click)="BackOnList()">Retour vers la liste des Fiche</button>

@@ -38,5 +38,5 @@ export class FicheService {
   addFiche(fiche:Fiche): Promise<any> {
     console.log('Nouvelle Fiche à renregistrer',fiche);
     return this.httpclient.post<Fiche>("/fiche/add", fiche).toPromise();
-  }
+}
 }

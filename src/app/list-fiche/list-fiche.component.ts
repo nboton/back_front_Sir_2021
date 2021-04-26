@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AddEditFicheDialogComponent } from '../add-edit-fiche-dialog/add-edit-fiche-dialog.component';
 import { FicheService } from '../fiche.service';
+import { IFiche } from '../modele/IFiche';
 
 @Component({
   selector: 'app-list-fiche',
@@ -12,15 +15,15 @@ export class ListFicheComponent implements OnInit {
 
  
   fiches:any
+  fiche:IFiche
   errorSms!: string;
-  ficheSouscription:Subscription
-
-  constructor(private router: Router,
+  
+  constructor(private dialog:MatDialog,private router: Router,
     private  ficheService: FicheService ) { }
 
 ngOnInit() {
 //On souscrit au subject sectionSubject pour récuperer la liste des sections
-this.ficheSouscription=this.ficheService.ficheSubject.subscribe(
+this.ficheService.ficheSubject.subscribe(
   (fichs)=>{
       this.fiches=fichs;
       console.log("contenu de la fiche dans init:",this.fiches);
@@ -48,8 +51,25 @@ onRemove(fiche:any){
 
 }
 
-ngOnDestroy(){
-  this.ficheSouscription.unsubscribe();
+importFile(fiche:IFiche){
+  const dialogConfig = new MatDialogConfig();
+  
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height="250px"
+    dialogConfig.width="500px"
+   
+    dialogConfig.data =fiche;
+    console.log(dialogConfig.data.idFiche)
+    const dialogRef = this.dialog.open(AddEditFicheDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {     
+     
+      //this.artefactServce.setXMLFile(result)
+      
+    });
+    
+    console.log(typeof(fiche));
 }
 
 
@@ -57,19 +77,8 @@ ngOnDestroy(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 BackOnList() {
-this.router.navigate(['detail-section']);
+this.router.navigate(['detail-fiche']);
 
 
 }
