@@ -24,6 +24,12 @@ import { HeaderComponent } from './header/header.component';
 import { ListFicheComponent } from './list-fiche/list-fiche.component';
 import { AddEditFicheDialogComponent } from './add-edit-fiche-dialog/add-edit-fiche-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog'; 
+import {TableModule} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+
 
 
 const appRoutes: Routes = [
@@ -68,6 +74,12 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
+    TableModule,
+    ButtonModule,
+    ToolbarModule,
+    DialogModule,
+    DropdownModule
+    
     
     
     

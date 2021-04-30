@@ -10,6 +10,7 @@ import { Tableau } from './modele/Tableau';
 export class TableauService {
   tableaux!:ITableau;
   tableauSubject=new Subject<ITableau>();
+  url="/api/tableau/";
   constructor(private httpclient:HttpClient) { }
 
   emitTableau(){
@@ -22,16 +23,15 @@ export class TableauService {
   }
 
   getAllTableau():Observable<ITableau>{
-    return this.httpclient.get<ITableau>("/api/fiche/");
+    return this.httpclient.get<ITableau>(this.url);
   }
 
   getTableau(idTableau:number):Observable<ITableau>{
-    return this.httpclient.get<ITableau>("/api/fiche/"+idTableau);
+    return this.httpclient.get<ITableau>(this.url+idTableau);
   }
 
   deleteTableau(idTableau:number):Observable<ITableau>{
-    console.log("url de supression:/api/fiche/delete/"+idTableau);
-    return this.httpclient.delete<ITableau>("/api/fiche/delete/"+idTableau);
+    return this.httpclient.delete<ITableau>(this.url+"delete/"+idTableau);
   }
 
 
@@ -42,7 +42,7 @@ export class TableauService {
     return this.httpclient.get<PokeDetail>(url+id+"/");
   }*/
   addTableau(tableau:Tableau): Observable<ITableau> {
-    return this.httpclient.post<ITableau>("/api/taleau/add",tableau);
+    return this.httpclient.post<ITableau>(this.url+"add",tableau);
 }
 }
 

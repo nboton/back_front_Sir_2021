@@ -10,6 +10,7 @@ import { IFiche } from './modele/IFiche';
 export class FicheService {
   fiches:IFiche;
   ficheSubject=new Subject<IFiche>();
+  url="/api/fiche/";
   constructor(private httpclient:HttpClient) { }
 
   emitFiche(){
@@ -22,21 +23,19 @@ export class FicheService {
   }
 
   getAllFiche():Observable<IFiche>{
-    return this.httpclient.get<IFiche>("/api/fiche/");
+    return this.httpclient.get<IFiche>(this.url);
   }
 
   getFiche(idFiche:number):Observable<IFiche>{
-    return this.httpclient.get<IFiche>("/api/fiche/"+idFiche);
+    return this.httpclient.get<IFiche>(this.url+idFiche);
   }
 
   deleteFiche(idFiche:number):Observable<IFiche>{
-    console.log("url de supression:/api/fiche/delete/"+idFiche);
-    return this.httpclient.delete<IFiche>("/api/fiche/delete/"+idFiche);
+    return this.httpclient.delete<IFiche>(this.url+"delete/"+idFiche);
   }
 
 
   addFiche(fiche:Fiche): Promise<any> {
-    console.log('Nouvelle Fiche à renregistrer',fiche);
-    return this.httpclient.post<Fiche>("/fiche/add", fiche).toPromise();
+    return this.httpclient.post<Fiche>(this.url+"add", fiche).toPromise();
 }
 }

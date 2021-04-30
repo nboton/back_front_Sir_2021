@@ -12,6 +12,7 @@ import { IFiche } from '../modele/IFiche';
 import { IUser } from '../modele/IUser';
 import { UtilisateurService } from '../utilisateur.service';
 import { TableauService } from '../tableau.service';
+import { ITableau } from '../modele/ITableau';
 
 @Component({
   selector: 'app-fiche',
@@ -24,8 +25,10 @@ export class FicheComponent implements OnInit {
   fiches:any
   errorSms!: string;
   selectedUserId:string='';
+  selectedTableauId:number;
   users:any;
-  tableaux:any
+  tableaux:any;
+  tableau:ITableau;
   user:IUser;
   //ficheSouscription:Subscription
  
@@ -39,22 +42,19 @@ this.initForm();
        this.userservice.utilisateurSubject.subscribe(
         (utili)=>{
             this.users=utili;
-            console.log("contenu de sections dans init:",this.users);
         }
       );
       //On déclenche la souscription
         this.userservice.emitUser();
-      
+
+        
         this.tableauserv.tableauSubject.subscribe(
           (tabs)=>{
               this.tableaux=tabs;
-              console.log("contenu de sections dans init:",this.tableaux);
           }
         );
         //On déclenche la souscription
           this.tableauserv.emitTableau();
-       
-
 }
 
 
@@ -67,7 +67,8 @@ lieu : [ '', Validators.required],
 noteExplicative : [ '', Validators.required],
 url : [ '', Validators.required],
 //codeUser : [ '', Validators.required],
-//selectedUserId : [ '', Validators.required],
+selectedUserId : [ '', Validators.required],
+selectedTableauId: [ '', Validators.required],
 
 });
 }
@@ -79,16 +80,13 @@ const libelle = this.ficheForm.get('libelle').value;
 const lieu = this.ficheForm.get('lieu').value;
 const noteExplicative = this.ficheForm.get('noteExplicative').value;
 const url = this.ficheForm.get('url').value;
-//const codeUser = this.ficheForm.get('codeUser').value;
-//const selectUserId = this.ficheForm.get('selectedUserId').value;
-const user=this.users[0];
-console.log("l'utilisateur1",user)
-//const user=new User("u1","nom","prenom","email",[]);
-const tableau=new Tableau(1,"tableau1",[],[]);
-//const user=this.getUserById(selectUserId)
+const selectUserId = this.ficheForm.get('selectedUserId').value;
+const selectedTableauId=this.ficheForm.get('selectedTableauId').value;
+const tableau=this.getTableauById(selectedTableauId)
+const user=this.getUserById(selectUserId)
 const fiche = new Fiche(dateButoire,libelle,lieu,url,noteExplicative,delai,[],user,[],tableau);
+console.log('Nouvelle Fiche à renregistrer',fiche);
 
-//alert(user);
 console.log('Nouvelle Fiche à renregistrer',dateButoire,"--",delai,"--",libelle,"--",lieu,"--",noteExplicative,"--",url,"--",user,"--",tableau);
 this.ficheService.addFiche(fiche).then(
 (res) => {
@@ -126,14 +124,31 @@ importFile(fiche:IFiche){
 }
 
 getUserById(userCode:string):any{
-  
-  this.userservice.getUser(userCode).subscribe(data=> {
+  for(let user of this.users){
+    if(user.codeUser==userCode){
+    this.user=user
+    break
+    }else{
+      continue
+    }
+  }
+  return this.user;
+}
+  getTableauById(idTableau:Number):any{
+    for(let tableau of this.tableaux){
+      if(tableau.idTableau==idTableau){
+      this.tableau=tableau
+      break
+      }else{
+        continue
+      }
+    }
+  return this.tableau;
+  /*this.userservice.getUser(userCode).subscribe((data)=> 
     this.user=data
  // alert(this.user.nom+" "+this.user.prenom)
-  });
- // alert(this.user.nom+ ""+this.user.prenom);
-  return this.user;
-
+  );
+ // alert(this.user.nom+ ""+this.user.prenom);*/
   
 
 }
