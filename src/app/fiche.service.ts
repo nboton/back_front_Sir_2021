@@ -8,6 +8,8 @@ import { IFiche } from './modele/IFiche';
   providedIn: 'root'
 })
 export class FicheService {
+  edition:boolean;
+  fiche:IFiche;
   fiches:IFiche;
   ficheSubject=new Subject<IFiche>();
   url="/api/fiche/";
@@ -37,5 +39,9 @@ export class FicheService {
 
   addFiche(fiche:Fiche): Promise<any> {
     return this.httpclient.post<Fiche>(this.url+"add", fiche).toPromise();
-}
+  }
+  updateFiche(fiche:Fiche): Promise<any> {
+      return this.httpclient.put<Fiche>(this.url+"update", fiche).toPromise();
+  }
+
 }

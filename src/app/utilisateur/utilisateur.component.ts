@@ -31,9 +31,9 @@ export class UtilisateurComponent implements OnInit {
      
   }
 
-  addUser(){
-    
-    
+  BackOnAdd(){
+    this.router.navigate(['user']);
+  
   }
   onRemove(user:any){
     //let resp=confirm("Are you sure you want to do that?");  

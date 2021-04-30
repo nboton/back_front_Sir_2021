@@ -1,25 +1,28 @@
-<h1  class="text-center">Affectation des fiches</h1> 
+
 <div class="row py-3 mb-2 bg-warning" style="margin-left: 5%;margin-right: 5%;">
-  
+ <br>
+  <h1  class="text-center">Affectation des fiches</h1> 
   <br>
   
     <form [formGroup]="ficheForm" (ngSubmit)="onSubmitForm()">
 
-
       <div class="col-md-6">
-          
+
+        <input type="hidden" id="idFiche" class="form-control" formControlName="idFiche" [(ngModel)]="fiche.idFiche" >
+
+
         <div class="form-group">
           <label for="libelle">libelle</label>
-          <input type="text" id="libelle" class="form-control" formControlName="libelle">
+          <input type="text" id="libelle" class="form-control" formControlName="libelle" [(ngModel)]="fiche.libelle">
         </div>
 
         <div class="form-group">
           <label for="url">Url</label>
-          <input type="text" id="url" class="form-control" formControlName="url">
+          <input type="text" id="url" class="form-control" formControlName="url" [(ngModel)]="fiche.url">
         </div>
         <div class="form-group">
           <label for="lieu">Lieu</label>
-          <input type="text" id="lieu" class="form-control" formControlName="lieu">
+          <input type="text" id="lieu" class="form-control" formControlName="lieu" [(ngModel)]="fiche.lieu">
         </div>
 
       </div>
@@ -28,10 +31,10 @@
            
             <div class="form-group">
               <label for="delai">Délai</label>
-              <input type="text" id="delai" class="form-control" formControlName="delai">
+              <input type="text" id="delai" class="form-control" formControlName="delai" [(ngModel)]="fiche.delai">
           </div>
           <div class="form-group">
-            <label for="dateButoire" style="padding-right: 16px;">Date butoire</label>
+            <label for="dateButoire" style="padding-right: 16px;" [(ngModel)]="fiche.dateButoire">Date butoire</label>
             <input type="date" id="dateButoire" formControlName="dateButoire">
             </div>
 
@@ -41,8 +44,8 @@
               <input type="text" id="codeUser" class="form-control" formControlName="codeUser">
             </div> -->
             <div class="form-group">
-              <label for="selectedUserId" style="padding-right: 20px;">L'utilisateur</label>
-              <select formControlName="selectedUserId" id="selectedUserId">
+              <label for="selectedUserId" style="padding-right: 20px;" >L'utilisateur</label>
+              <select formControlName="selectedUserId" id="selectedUserId" >
                   <option disabled>Choisir l'utilisaeur</option>
                   <option [value]="user.codeUser" *ngFor="let user of users " >
                     {{user.nom}} {{user.prenom}}
@@ -52,7 +55,7 @@
 
             <div class="form-group">
               <label for="selectedTableauId" style="padding-right: 40px;">Tableau</label>
-                <select formControlName="selectedTableauId" >
+                <select formControlName="selectedTableauId"  >
                   <option disabled>Choisir Le tableau</option>
                   <option [value]="tab.idTableau" *ngFor="let tab of tableaux " >
                     {{tab.libelle}}
@@ -63,7 +66,7 @@
       <div class="col-md-12">
       <div class="form-group">
         <label for="noteExplicative" >Note Explicative</label>
-        <textarea class="form-control" id="noteExplicative" rows="4" formControlName="noteExplicative"></textarea>
+        <textarea class="form-control" id="noteExplicative" rows="4" formControlName="noteExplicative" [(ngModel)]="fiche.noteExplicative"></textarea>
      </div>
       <button type="submit" class="btn btn-primary" [disabled]="ficheForm.invalid">Enregistrer la Fiche</button>
       <br><br>
@@ -71,7 +74,6 @@
     </div> 
       </form>
       <div class="col-md-2"></div>
-     
 </div>
 
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { IFiche } from './modele/IFiche';
 import { ISection } from './modele/ISection';
 import { Section } from './modele/Section';
 

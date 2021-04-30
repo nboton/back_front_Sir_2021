@@ -1,5 +1,11 @@
-<p>section works!</p>
 
+<div class="row py-5 mb-2 bg-warning" style="margin-left: 20%;margin-right: 20%;">
+  <br>
+  <h1 class="text-center"> Créer une nouvelle section</h1>
+  <br>
+  <div class="col-sm-3"></div>
+
+  <div class="col-sm-6">
 <div class="">
     <form [formGroup]="sectionForm" (ngSubmit)="onSubmitForm()">
      
@@ -7,9 +13,14 @@
         <label for="libelle">libelle</label>
         <input type="text" id="libelle" class="form-control" formControlName="libelle">
       </div>
+      
              <button type="submit" class="btn btn-primary" [disabled]="sectionForm.invalid">Enregistrer la section</button>
              <br><br>
              <button class="btn btn-primary" (click)="BackOnList()">Retour vers la liste des sections</button>
 
+             <br>
     </form>
+    </div>
+    <div class="col-sm-3"></div>
+    </div>
   </div>

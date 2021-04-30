@@ -1,8 +1,10 @@
 
-  <h1>Liste des sections</h1>
+  <h1 class="text-center">Liste des sections</h1>
 
-
-<div class="row">
+  <div class="row py-3 mb-2 bg-warning" style="margin-left: 20%; margin-right: 20%;align-content: center;">
+    <button class="btn btn-primary" (click)="BackOnAdd()">Nouvelle section</button>
+  </div>
+<div class="row py-3 mb-2 bg-warning" style="margin-left: 20%; margin-right: 20%;align-content: center;">
 
  
   <br>
@@ -15,7 +17,6 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Libelle</th>
-        <th scope="col" style="width: auto;" class="text-center">Action</th>
        
       </tr>
       </thead>
@@ -23,15 +24,7 @@
       <tr *ngFor="let section of sections">
         <th scope="row">{{section.idSection}}</th>
         <td>{{section.libelle}}</td>
-        <td class="text-center">
-          <button title="modifier" (click)="onRemove(section)"
-                    class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>Edit
-          </button>
-
-          <button title="supprimer" (click)="onRemove(section)"
-            class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span>Delete
-          </button> 
-        </td>
+        
       </tr>
 
       </tbody>

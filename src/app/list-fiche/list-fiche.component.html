@@ -7,7 +7,7 @@
 
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="BackOnList()"></button>
          <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedFiche || selectedFiche==null"></button>
      --> </ng-template>
 
@@ -19,11 +19,14 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>libelle</th>
-                <th>Url</th>
-                <th>Date Butoire</th>
-                <th>Delai</th>
-                <th>Lieu</th>
                 <th>Note Explicative</th>
+                <th>Lieu</th>
+                <th>Date Butoire</th>
+                <th>Url</th>
+                
+                <th>Delai</th>
+                
+                
                 <th>codeUser</th>
                 <th>idTableau</th>
                 <th>Action</th>
@@ -32,12 +35,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-fiche>
             <tr>
-                <td>{{fiche.libelle}}</td>
+                <td>{{fiche.libelle}}</td> 
+                <td>{{fiche.noteExplicative}}</td> 
+                <td>{{fiche.lieu}}</td> 
+                <td>{{fiche.dateButoire | date:'dd/MM/yyyy'}}</td>
                 <td>{{fiche.url}}</td>
-                <td>{{fiche.dateButoire}}</td>
+               
                 <td>{{fiche.delai}}</td>
-                <td>{{fiche.lieu}}</td>
-                <td>{{fiche.noteExplicative}}</td>
                 <td>{{fiche.utilisateur.codeUser}}</td>
                 <td>{{fiche.tableau.idTableau}}</td>
                 <td>
@@ -56,88 +60,4 @@
 </div>
 </div>
 
-
-<!-- Dialog-->
-
-<p-dialog [(visible)]="ficheDialog" [style]="{width: '450px'}" header="Détails Fiche" [modal]="true" styleClass="p-fluid">
-  <ng-template pTemplate="content">
-     <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image">
-      --><div class="p-field">
-          <label for="libelle">libelle</label>
-          <input type="text" pInputText id="libelle" [(ngModel)]="fiche.libelle" required autofocus />
-          <small class="p-error" *ngIf="submitted && !fiche.libelle">libelle is required.</small>
-      </div>
-      
-     <!-- <div class="p-field">
-          <label for="inventoryStatus">Inventory Status</label>
-          <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
-              <ng-template let-option pTemplate="item">
-                  <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-              </ng-template>
-          </p-dropdown>
-      </div>-->
-
-
-<div class="p-field">
-  <label for="url">Url</label>
-  <input type="text" pInputText id="url" [(ngModel)]="fiche.url" required autofocus />
-  <small class="p-error" *ngIf="submitted && !fiche.url">Url is required.</small>
-</div>
-<div class="p-field">
-  <label for="lieu">Lieu</label>
-  <input type="text" pInputText id="lieu" [(ngModel)]="fiche.lieu" required autofocus />
-  <small class="p-error" *ngIf="submitted && !fiche.lieu">Lieu is required.</small>
-</div>
-
-<div class="p-field">
-  <label for="delai">Delai</label>
-  <input type="=number"  id="delai" [(ngModel)]="fiche.delai"required autofocus/>
-  <small class="p-error" *ngIf="submitted && !fiche.delai">Delai is required.</small>
-</div>
-
-
-<div class="p-field">
-    <label for="noteExplicative">Description</label>
-    <textarea id="noteExplicative" pInputTextarea [(ngModel)]="fiche.noteExplicative" required rows="3" cols="20"></textarea>
-</div>
-
-<!-- DropDown -->
-
-<div class="p-field">
-  <p-dropdown [(ngModel)]="fiche.utilisaeur.codeUser"[options]="users" formControlName="selectedUser" optionLabel="nom">
-
-  </p-dropdown> 
-
-</div>
-<div class="form-group">
-  <label for="selectedTableauId" style="padding-right: 40px;">Tableau</label>
-    <select formControlName="selectedTableauId" >
-      <option disabled>Choisir Le tableau</option>
-      <option [value]="tab.idTableau" *ngFor="let tab of tableaux " >
-        {{tab.libelle}}
-      </option>
-    </select>
-</div>
-
-<div class="form-group">
-  <label for="selectedUserId" style="padding-right: 20px;">L'utilisateur</label>
-  <select formControlName="selectedUserId" id="selectedUserId">
-      <option disabled>Choisir l'utilisaeur</option>
-      <option [value]="user.codeUser" *ngFor="let user of users " >
-        {{user.nom}} {{user.prenom}}
-      </option>
-  </select>
-</div>
-
-
-
-
-
-  </ng-template>
-  
-  <ng-template pTemplate="footer">
-      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveFiche()"></button>
-  </ng-template>
-</p-dialog>
 

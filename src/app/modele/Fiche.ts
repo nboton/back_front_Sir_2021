@@ -4,6 +4,7 @@ import { Tableau } from "./Tableau";
 import { User } from "./User";
 
 export class Fiche {
+    public idFiche: number
     private dateButoire:          string
     private libelle:              string
     private lieu:                 string

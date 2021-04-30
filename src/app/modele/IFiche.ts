@@ -4,10 +4,10 @@ import { User } from "./User";
 
 export interface IFiche {
   idFiche:              number;
-  dateButoire:          number;
+  dateButoire:          string;
   libelle:              string;
   lieu:                 String;
-  url:                  URL;
+  url:                  string;
   noteExplicative:      string;
   delai:                number;
   tags:                 any[];

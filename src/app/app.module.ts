@@ -29,6 +29,7 @@ import {ButtonModule} from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
     ButtonModule,
     ToolbarModule,
     DialogModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule
     
     
     

@@ -50,5 +50,9 @@ export class ListSectionComponent implements OnInit {
     this.sectionSouscription.unsubscribe();
   }
 
-
+  
+  BackOnAdd() {
+    this.router.navigate(['section']);
+   
+  }
 }

@@ -26,6 +26,7 @@ export class ListFicheComponent implements OnInit {
   submitted: boolean;
   ficheDialog: boolean;
   selectedUser:User;
+  value: Date
 
   
   constructor(private tableauserv:TableauService,private utilisateurService:UtilisateurService, private dialog:MatDialog,private router: Router,
@@ -61,7 +62,6 @@ ngOnInit() {
         this.tableauserv.emitTableau();
 }
 
-
 onRemove(fiche:any){
   this.ficheService.deleteFiche(fiche).subscribe(
     (res) => {
@@ -75,49 +75,22 @@ onRemove(fiche:any){
     }
       );
       this.fiches=this.fiches.filter(val=>fiche.idFiche!=val.idFiche );
- //this.router.navigate(['detail-section']);
 
-}
-
-importFile(fiche:IFiche){
-  const dialogConfig = new MatDialogConfig();
-  
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.height="250px"
-    dialogConfig.width="500px"
-   
-    dialogConfig.data =fiche;
-    console.log(dialogConfig.data.idFiche)
-    const dialogRef = this.dialog.open(AddEditFicheDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {     
-     
-      //this.artefactServce.setXMLFile(result)
-      
-    });
-    
-    console.log(typeof(fiche));
 }
 
 
 BackOnList() {
-this.router.navigate(['detail-fiche']);
+ // this.ficheService.fiche=null;
+  this.ficheService.edition=false;
+  this.router.navigate(['fiche']);
 
-
-}
-
-//**** */
-openNew() {
-    this.fiche ={};
-    this.submitted = false;
-    this.ficheDialog = true;
 }
 
 /**Edition de fiche */
-editFiche(fiche: Fiche) {
-    this.fiche = {...fiche};
-    this.ficheDialog = true;
+editFiche(fiche: IFiche) {
+   this.ficheService.fiche=fiche;
+   this.ficheService.edition=true;
+   this.router.navigate(['fiche']);
 }
 
 /**Delete produit */
@@ -134,34 +107,6 @@ deleteFiche(fiche: IFiche) {
         }
           );
           this.fiches=this.fiches.filter(val=>fiche.idFiche!=val.idFiche );
-     //this.router.navigate(['detail-section']);
-}
-
-/**Hide Dialog */
-hideDialog() {
-    this.ficheDialog = false;
-    this.submitted = false;
-}
-
-saveFiche() {
-    this.submitted = true;
-
-    /*if (this.product.name.trim()) {
-        if (this.product.id) {
-            this.products[this.findIndexById(this.product.id)] = this.product;                
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-        }
-        else {
-            this.product.id = this.createId();
-            this.product.image = 'product-placeholder.svg';
-            this.products.push(this.product);
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
-        }
-
-        this.products = [...this.products];
-        this.productDialog = false;
-        this.product = {};
-    }*/
 }
 
 }

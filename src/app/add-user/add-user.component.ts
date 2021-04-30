@@ -53,18 +53,25 @@ export class AddUserComponent implements OnInit {
     const email=this.usersForm.get("email").value;
     const user=new User(code,nom,prenom,email,[]);
     //console.log('code:',code," nom:",nom," prenom",prenom, " email",email);
+   if (confirm("Do you want to save changes?") == true) {
     this.userService.addUser(user).then(
       (res)=>{
         if (res){
           this.userService.emitUser();
+          alert("Enregistrement effectué avec succès");
+          this.BackOnList();
         }
       },
       (error)=>{
         console.log(error);
       }
     )
-    console.log("l'objet user issu du form:",user)
+  
   }
+  }
+
+
+
   BackOnList() {
     this.router.navigate(['detail-user']);
   

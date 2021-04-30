@@ -30,6 +30,8 @@ export class FicheComponent implements OnInit {
   tableaux:any;
   tableau:ITableau;
   user:IUser;
+  fiche:any;
+  edite:boolean;
   //ficheSouscription:Subscription
  
   constructor(private tableauserv:TableauService,private userservice:UtilisateurService, private dialog:MatDialog,private formBuilder: FormBuilder,
@@ -37,20 +39,23 @@ export class FicheComponent implements OnInit {
     private  ficheService: FicheService ) { }
 
 ngOnInit() {
+ 
 this.initForm();
+this.LoadFieldForEdition()
        //On souscrit au subject sectionSubject pour récuperer la liste des sections
        this.userservice.utilisateurSubject.subscribe(
         (utili)=>{
             this.users=utili;
+            console.log(this.users)
         }
       );
       //On déclenche la souscription
         this.userservice.emitUser();
-
         
         this.tableauserv.tableauSubject.subscribe(
           (tabs)=>{
               this.tableaux=tabs;
+              console.log(this.tableaux)
           }
         );
         //On déclenche la souscription
@@ -66,7 +71,7 @@ libelle : [ '', Validators.required],
 lieu : [ '', Validators.required],
 noteExplicative : [ '', Validators.required],
 url : [ '', Validators.required],
-//codeUser : [ '', Validators.required],
+idFiche : [ '', Validators.required],
 selectedUserId : [ '', Validators.required],
 selectedTableauId: [ '', Validators.required],
 
@@ -74,53 +79,67 @@ selectedTableauId: [ '', Validators.required],
 }
 
 onSubmitForm() {
-const dateButoire = this.ficheForm.get('dateButoire').value;
-const delai = this.ficheForm.get('delai').value;
-const libelle = this.ficheForm.get('libelle').value;
-const lieu = this.ficheForm.get('lieu').value;
-const noteExplicative = this.ficheForm.get('noteExplicative').value;
-const url = this.ficheForm.get('url').value;
-const selectUserId = this.ficheForm.get('selectedUserId').value;
-const selectedTableauId=this.ficheForm.get('selectedTableauId').value;
-const tableau=this.getTableauById(selectedTableauId)
-const user=this.getUserById(selectUserId)
-const fiche = new Fiche(dateButoire,libelle,lieu,url,noteExplicative,delai,[],user,[],tableau);
-console.log('Nouvelle Fiche à renregistrer',fiche);
 
-console.log('Nouvelle Fiche à renregistrer',dateButoire,"--",delai,"--",libelle,"--",lieu,"--",noteExplicative,"--",url,"--",user,"--",tableau);
-this.ficheService.addFiche(fiche).then(
-(res) => {
-// Lorsque l'ajout a été effectué on émet la liste pour rafraichir celle-ci dans le component list-section
-if (res) {
-this.ficheService.emitFiche();
-}
-this.BackOnList();
-},
-(error) => {
-console.log(error);
-}
-);
-this.router.navigate(['detail-fiche']);
-}
+  const dateButoire = this.ficheForm.get('dateButoire').value;
+  const delai = this.ficheForm.get('delai').value;
+  const libelle = this.ficheForm.get('libelle').value;
+  const lieu = this.ficheForm.get('lieu').value;
+  const noteExplicative = this.ficheForm.get('noteExplicative').value;
+  const url = this.ficheForm.get('url').value;
+  const selectUserId = this.ficheForm.get('selectedUserId').value;
+  const selectedTableauId=this.ficheForm.get('selectedTableauId').value;
+  const tableau=this.getTableauById(selectedTableauId)
+  const user=this.getUserById(selectUserId)
+  const fiche = new Fiche(dateButoire,libelle,lieu,url,noteExplicative,delai,[],user,[],tableau);
 
-
-importFile(fiche:IFiche){
-  const dialogConfig = new MatDialogConfig();
-  
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.height="250px"
-    dialogConfig.width="500px"
-   
-    dialogConfig.data =fiche;
-    
-    const dialogRef = this.dialog.open(AddEditFicheDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {     
-     
-      //this.artefactServce.setXMLFile(result)
+//Lorsqu'il s'agit d'une édition, edition est à true
+if(this.ficheService.edition){
+    //Si modification confirmée 
+    if (confirm("Do you want to save changes?") == true) {
+    const id = this.ficheForm.get('idFiche').value;
+    alert(id);
+    this.ficheService.updateFiche(fiche).then(
+      (res) => {
+      // Lorsque l'ajout a été effectué on émet la liste pour rafraichir celle-ci dans le component list-section
+      if (res) {
+      this.ficheService.emitFiche();
+      //alert("Modification effectuée avec succès");
+      }
+      },
+      (error) => {
+      console.log(error);
+      }
+      );
       
-    });
+      this.BackOnList();
+      //Si modification Annulée
+    } else {  
+        alert("Modification annulée");
+    }
+//Lorsqu'il s'agit d'un nouvel enregistrement edition=false
+}else{
+  if (confirm("Do you want to save changes?") == true) {
+      this.ficheService.addFiche(fiche).then(
+      (res) => {
+      // Lorsque l'ajout a été effectué on émet la liste pour rafraichir celle-ci dans le component liste-iche
+      if (res) {
+      this.ficheService.emitFiche();
+      }
+      this.BackOnList();
+      },
+      (error) => {
+      console.log(error);
+      }
+      );
+  
+      //Si Suppression Annulée
+      }else{
+        alert("Enregistrement annulé");
+      }
+      this.router.navigate(['detail-fiche']);
+  
+  }
+
 }
 
 getUserById(userCode:string):any{
@@ -144,18 +163,45 @@ getUserById(userCode:string):any{
       }
     }
   return this.tableau;
-  /*this.userservice.getUser(userCode).subscribe((data)=> 
-    this.user=data
- // alert(this.user.nom+" "+this.user.prenom)
-  );
- // alert(this.user.nom+ ""+this.user.prenom);*/
-  
+ 
 
 }
+LoadFieldForEdition(){
+  if(this.ficheService.fiche!=undefined){
+    this.fiche=this.ficheService.fiche;   
+  }else{
 
-
+    this.fiche ={
+                  "idFiche":0,
+                  "dateButoire":"",
+                  "libelle":"",
+                  "lieu":"",
+                  "url":"",
+                  "noteExplicative":"",
+                  "delai":0,
+                  "tags":[],
+                  "utilisateur":this.user,
+                  "positionnementFiches":[],
+                  "tableau":this.tableau
+                };
+  }
+}
 
 BackOnList() {
+  this.fiche ={
+    "idFiche":0,
+    "dateButoire":"",
+    "libelle":"",
+    "lieu":"",
+    "url":"",
+    "noteExplicative":"",
+    "delai":0,
+    "tags":[],
+    "utilisateur":this.user,
+    "positionnementFiches":[],
+    "tableau":this.tableau
+  };
+  
 this.router.navigate(['detail-fiche'])
 }
 
